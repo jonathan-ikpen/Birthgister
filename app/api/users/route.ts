@@ -1,7 +1,21 @@
 import prismadb from "@/lib/prismadb";
-import { NextResponse } from "next/server";
+import {NextRequest, NextResponse} from "next/server";
 
-export async function POST(req: Request) {
+export async function OPTIONS(request: NextRequest) {
+    const origin = request.headers.get('origin')
+
+    return new NextResponse(null, {
+        status: 204,
+        headers: {
+            'Access-Control-Allow-Origin': origin || '*',
+            'Access-Control-Allow-Methods': 'GET,OPTIONS,PATCH,DELETE,POST,PUT',
+            'Access-Control-Allow-Headers': 'Content-Type'
+        }
+    })
+}
+
+
+export async function POST(req: NextRequest) {
     try {
         // requesting data from frontend
         const body = await req.json();
@@ -118,7 +132,7 @@ export async function POST(req: Request) {
 
 }
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
     try {
         const users = await prismadb.user.findMany({
             include: {
