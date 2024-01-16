@@ -52,7 +52,13 @@ export async function POST(req: Request) {
                             informantNationalID,
                         }
                     }
-                }});
+                },
+                include: {
+                    mother: true,
+                    father: true,
+                    informant: true,
+                }
+            });
             return NextResponse.json({ data: createdChildUser });
         }
 
@@ -78,7 +84,11 @@ export async function POST(req: Request) {
                             parentNationalID,
                         }
                     }
-                }});
+                },
+                include: {
+                    parent: true,
+                }
+            });
             return NextResponse.json({ data: createdAdultUser });
         }
 
@@ -93,7 +103,14 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
     try {
-        const users = await prismadb.user.findMany();
+        const users = await prismadb.user.findMany({
+            include: {
+                mother: true,
+                father: true,
+                informant: true,
+                parent: true
+            }
+        });
         return NextResponse.json({
             users,
         });
