@@ -59,7 +59,15 @@ export async function POST(req: Request) {
                     informant: true,
                 }
             });
-            return NextResponse.json({ data: createdChildUser });
+            return NextResponse.json({
+                status: 200,
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+                },
+                data: createdChildUser
+            });
         }
 
         if(adult) {
@@ -89,7 +97,15 @@ export async function POST(req: Request) {
                     parent: true,
                 }
             });
-            return NextResponse.json({ data: createdAdultUser });
+            return NextResponse.json({
+                status: 200,
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+                },
+                data: createdAdultUser
+            });
         }
 
         return NextResponse.json("Invalid Request",{status: 401});
@@ -113,6 +129,12 @@ export async function GET(req: Request) {
         });
         return NextResponse.json({
             users,
+            status: 200,
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+            },
         });
     } catch (error) {
         console.log("[Users_Get]", error);
