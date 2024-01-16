@@ -17,7 +17,7 @@ export async function OPTIONS(request: NextRequest) {
 
 export async function POST(req: Request) {
     try {
-        const cors = req.headers.get("*")
+        const cors = req.headers.get("origin")
 
         if(cors) {
             req.headers.set("Access-Control-Allow-Origin", cors)
@@ -141,7 +141,7 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
     try {
-        const cors = req.headers.get("*")
+        const cors = req.headers.get("origin")
 
         if(cors) {
             req.headers.set("Access-Control-Allow-Origin", cors)
