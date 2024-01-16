@@ -12,9 +12,9 @@ datasource db {
 
 model User {
   id          Int            @id @default(autoincrement())
-  email       String         @unique
+  email       String?        @unique
   name        String?
-  dateofbirth DateTime
+  dateofbirth String
   age         String
   gender      String
   place       String
@@ -36,11 +36,11 @@ model Informant {
 }
 
 model MotherDetails {
-  id                   Int      @id @unique
-  user                 User     @relation(fields: [id], references: [id])
+  id                   Int    @id @unique
+  user                 User   @relation(fields: [id], references: [id])
   mothersName          String
   mothersResidence     String
-  mothersAgeAtBirth    DateTime
+  mothersAgeAtBirth    String
   mothersMaritalStatus String
   mothersNationality   String
   mothersStateOfOrigin String
