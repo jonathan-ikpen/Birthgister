@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int            @id @default(autoincrement())
+  email       String         @unique
+  name        String?
+  dateofbirth DateTime
+  age         String
+  gender      String
+  place       String
+  town        String
+  informant   Informant?
+  parent      ParentDetails?
+  mother      MotherDetails?
+  father      FatherDetails?
+}
+
+model Informant {
+  id                           Int    @id @unique
+  user                         User   @relation(fields: [id], references: [id])
+  informantRelationshipToChild String
+  informantName                String
+  informantResidence           String
+  informantPhoneNumber         String
+  informantNationalID          String
+}
+
+model MotherDetails {
+  id                   Int      @id @unique
+  user                 User     @relation(fields: [id], references: [id])
+  mothersName          String
+  mothersResidence     String
+  mothersAgeAtBirth    DateTime
+  mothersMaritalStatus String
+  mothersNationality   String
+  mothersStateOfOrigin String
+  mothersOccupation    String
+  mothersPhoneNumber   String
+  mothersNationalID    String
+}
+
+model FatherDetails {
+  id                   Int    @id @unique
+  user                 User   @relation(fields: [id], references: [id])
+  fathersName          String
+  fathersResidence     String
+  fathersCurrentAge    String
+  fathersNationality   String
+  fathersStateOfOrigin String
+  fathersOccupation    String
+  fathersPhoneNumber   String
+  fathersNationalID    String
+}
+
+model ParentDetails {
+  id                  Int    @id @unique
+  user                User   @relation(fields: [id], references: [id])
+  parentName          String
+  parentResidence     String
+  parentCurrentAge    String
+  parentNationality   String
+  parentStateOfOrigin String
+  parentOccupation    String
+  parentPhoneNumber   String
+  parentNationalID    String
+}
