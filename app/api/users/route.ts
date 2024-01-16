@@ -20,10 +20,6 @@ export async function POST(req: Request) {
     try {
         const corsOrigin = req.headers.get('Origin'); // Get the actual origin from the request
 
-        if(corsOrigin) {
-            req.headers.set("Access-Control-Allow-Origin", corsOrigin)
-        }
-
         // requesting data from frontend
         const body = await req.json();
 
@@ -145,10 +141,6 @@ export async function POST(req: Request) {
 export async function GET(req: Request) {
     try {
         const corsOrigin = req.headers.get('Origin'); // Get the actual origin from the request
-
-        if(corsOrigin) {
-            req.headers.set("Access-Control-Allow-Origin", corsOrigin)
-        }
 
         const users = await prismadb.user.findMany({
             include: {
