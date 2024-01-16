@@ -98,13 +98,14 @@ export async function POST(req: Request) {
                 }
             });
             return NextResponse.json({
+                data: createdAdultUser
+            }, {
                 status: 200,
                 headers: {
                     'Access-Control-Allow-Origin': '*',
                     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
                     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
                 },
-                data: createdAdultUser
             });
         }
 
@@ -128,7 +129,8 @@ export async function GET(req: Request) {
             }
         });
         return NextResponse.json({
-            users,
+            users
+        }, {
             status: 200,
             headers: {
                 'Access-Control-Allow-Origin': '*',
