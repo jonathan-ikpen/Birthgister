@@ -9,7 +9,8 @@ export async function OPTIONS(request: NextRequest) {
         headers: {
             'Access-Control-Allow-Origin': origin || '*',
             'Access-Control-Allow-Methods': 'GET,OPTIONS,PATCH,DELETE,POST,PUT',
-            'Access-Control-Allow-Headers': 'Content-Type'
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'X-Cors-Public-Origin': origin || '*',
         }
     })
 }
@@ -17,10 +18,10 @@ export async function OPTIONS(request: NextRequest) {
 
 export async function POST(req: Request) {
     try {
-        const cors = req.headers.get("origin")
+        const corsOrigin = req.headers.get('Origin'); // Get the actual origin from the request
 
-        if(cors) {
-            req.headers.set("Access-Control-Allow-Origin", cors)
+        if(corsOrigin) {
+            req.headers.set("Access-Control-Allow-Origin", corsOrigin)
         }
 
         // requesting data from frontend
@@ -87,6 +88,7 @@ export async function POST(req: Request) {
                     'Access-Control-Allow-Origin': '*',
                     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
                     'Access-Control-Allow-Headers': 'Content-Type',
+                    'X-Cors-Public-Origin': corsOrigin || '*',
                 }
             })
         }
@@ -126,6 +128,7 @@ export async function POST(req: Request) {
                     'Access-Control-Allow-Origin': '*',
                     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
                     'Access-Control-Allow-Headers': 'Content-Type',
+                    'X-Cors-Public-Origin': corsOrigin || '*',
                 },
             });
         }
@@ -141,10 +144,10 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
     try {
-        const cors = req.headers.get("origin")
+        const corsOrigin = req.headers.get('Origin'); // Get the actual origin from the request
 
-        if(cors) {
-            req.headers.set("Access-Control-Allow-Origin", cors)
+        if(corsOrigin) {
+            req.headers.set("Access-Control-Allow-Origin", corsOrigin)
         }
 
         const users = await prismadb.user.findMany({
@@ -155,18 +158,23 @@ export async function GET(req: Request) {
                 parent: true
             }
         });
+
+        const corsHeaders = {
+            'Access-Control-Allow-Origin': corsOrigin || '*', // Use the actual origin or '*' if not present
+            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'X-Cors-Public-Origin': corsOrigin || '*', // Set X-Cors-Public-Origin based on the actual origin or '*'
+        };
+
         return NextResponse.json({
             users
         }, {
             status: 200,
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-                'Access-Control-Allow-Headers': 'Content-Type',
-            },
+            headers: corsHeaders,
         });
     } catch (error) {
         console.log("[Users_Get]", error);
         return new NextResponse("Internal error", { status: 500 });
     }
 }
+
