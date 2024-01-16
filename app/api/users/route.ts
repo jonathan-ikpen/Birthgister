@@ -23,7 +23,7 @@ export async function POST(req: Request) {
         // requesting data from frontend
         const body = await req.json();
 
-        const { name, email, dateofbirth, age, gender, place, town, mothersName, mothersResidence, mothersAgeAtBirth, mothersMaritalStatus, mothersNationality, mothersStateOfOrigin, mothersOccupation, mothersPhoneNumber, mothersNationalID, fathersName, fathersResidence, fathersCurrentAge, fathersNationality, fathersStateOfOrigin, fathersOccupation, fathersPhoneNumber, fathersNationalID, informantName, informantRelationshipToChild, informantResidence, informantNationalID, informantPhoneNumber, parentName, parentResidence, parentCurrentAge, parentNationality, parentStateOfOrigin, parentOccupation, parentPhoneNumber, parentNationalID, child, adult } = body;
+        const { name, photo, email, dateofbirth, age, gender, place, town, mothersName, mothersResidence, mothersAgeAtBirth, mothersMaritalStatus, mothersNationality, mothersStateOfOrigin, mothersOccupation, mothersPhoneNumber, mothersNationalID, fathersName, fathersResidence, fathersCurrentAge, fathersNationality, fathersStateOfOrigin, fathersOccupation, fathersPhoneNumber, fathersNationalID, informantName, informantRelationshipToChild, informantResidence, informantNationalID, informantPhoneNumber, parentName, parentResidence, parentCurrentAge, parentNationality, parentStateOfOrigin, parentOccupation, parentPhoneNumber, parentNationalID, child, adult } = body;
 
         if(child) {
             const createdChildUser = await prismadb.user.create({
@@ -32,6 +32,7 @@ export async function POST(req: Request) {
                     name,
                     dateofbirth,
                     age,
+                    photo,
                     gender,
                     place,
                     town,
@@ -96,6 +97,7 @@ export async function POST(req: Request) {
                     name,
                     dateofbirth,
                     age,
+                    photo,
                     gender,
                     place,
                     town,

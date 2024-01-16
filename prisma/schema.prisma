@@ -23,6 +23,7 @@ model User {
   parent      ParentDetails?
   mother      MotherDetails?
   father      FatherDetails?
+  photo       String?
 }
 
 model Informant {
