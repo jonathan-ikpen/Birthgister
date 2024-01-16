@@ -15,8 +15,14 @@ export async function OPTIONS(request: NextRequest) {
 }
 
 
-export async function POST(req: NextRequest) {
+export async function POST(req: Request) {
     try {
+        const cors = req.headers.get("*")
+
+        if(cors) {
+            req.headers.set("Access-Control-Allow-Origin", cors)
+        }
+
         // requesting data from frontend
         const body = await req.json();
 
@@ -133,8 +139,14 @@ export async function POST(req: NextRequest) {
 
 }
 
-export async function GET(req: NextRequest) {
+export async function GET(req: Request) {
     try {
+        const cors = req.headers.get("*")
+
+        if(cors) {
+            req.headers.set("Access-Control-Allow-Origin", cors)
+        }
+
         const users = await prismadb.user.findMany({
             include: {
                 mother: true,
