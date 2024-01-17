@@ -115,7 +115,7 @@ export async function POST(req: Request) {
                     }
                 },
                 include: {
-                    parent: true,
+                    parent: true
                 }
             });
             return NextResponse.json({
@@ -127,8 +127,8 @@ export async function POST(req: Request) {
                     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
                     'Access-Control-Allow-Headers': 'Content-Type',
                     'X-Cors-Public-Origin': corsOrigin || '*',
-                },
-            });
+                }
+            })
         }
 
         return NextResponse.json("Invalid Request",{status: 401});
